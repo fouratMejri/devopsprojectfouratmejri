@@ -78,7 +78,7 @@ pipeline {
                     sh 'docker build -t devops-integration .'
                    
                    
-                    sh'docker tag devops-integration ayman24051999/devops-integration'
+                    sh'docker tag devops-integration fourat24051999/devops-integration'
 
                 }
                
@@ -99,10 +99,10 @@ pipeline {
             steps{
                 script{
                     withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerpassword')]) {
-                        sh 'docker login -u ayman24051999 -p ${dockerpassword}'
+                        sh 'docker login -u fourat5 -p fsm456123az'
                        
                         }
-                        sh'docker push ayman24051999/devops-integration'
+                        sh'docker push fourat24051999/devops-integration'
                        
                     }
             }

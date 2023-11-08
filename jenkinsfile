@@ -76,7 +76,7 @@ pipeline {
                     sh 'docker build -t devops-integration .'
                    
                    
-                    sh'docker tag devops-integration fourat24051999/devops-integration'
+                     sh'docker tag devops-integration devopsprojectfouratmejri/devops-integration'
 
                 }
                
@@ -100,7 +100,7 @@ pipeline {
                         sh 'docker login -u fourat5 -p fsm456123az'
                        
                         }
-                        sh'docker push fourat24051999/devops-integration'
+                        sh'docker push devopsprojectfouratmejri/devops-integration'
                        
                     }
             }

@@ -23,6 +23,22 @@ pipeline {
                
                 sh 'mvn install'
             }
+     post {
+        success {
+            emailext(
+                subject: 'Build Successful',
+                body: 'The build has succeeded.',
+                recipientProviders: [culprits()],
+            )
+        }
+        failure {
+            emailext(
+                subject: 'Build Failed',
+                body: 'The build has failed.',
+                recipientProviders: [culprits()],
+            )
+        }
+    }
         }
         stage('package') {
             steps {

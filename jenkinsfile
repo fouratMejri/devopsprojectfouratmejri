@@ -58,11 +58,11 @@ pipeline {
               stage('mvn SonarQube') {
     steps {
         script {
-            withCredentials([string(credentialsId: 'sonar_token', variable: 'sonar_token')]) {
+            
 
            
-                sh "mvn sonar:sonar -Dsonar.projectKey=sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${sonar_token}"
-                        }
+                sh "mvn sonar:sonar -Dsonar.projectKey=sonar -Dsonar.host.url=192.168.33.10:9000 -Dsonar.login=squ_edd21ca93b343990f5fd110fd96fad3b01b0067c"
+                        
                     }
                 }
             }

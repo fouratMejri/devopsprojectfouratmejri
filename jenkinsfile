@@ -10,7 +10,7 @@ pipeline {
                     
             }
         }
-}
+
         stage('Clean Project') {
             steps {
                 // Perform build steps here, like compiling the code

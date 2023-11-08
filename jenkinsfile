@@ -6,10 +6,9 @@ pipeline {
             steps {
                 echo 'pulling..';
                 git branch: 'master',
-                    url: 'https://github.com/fouratMejri/devopsprojectfouratmejri.git'
+                    url: 'https://github.com/fouratMejri/devopsprojectfouratmejri.git',
                     
             }
-        
         }
         stage('Clean Project') {
             steps {
@@ -35,20 +34,27 @@ pipeline {
                
             }
                
-        }
-        stage('mvn SonarQube') {
-    		steps {
-        		script {
-        
-                sh "mvn sonar:sonar -Dsonar.projectKey=sonar -Dsonar.host.url=http://192.168.33.10:9000 -Dsonar.login=squ_1c2c087a67e78c118675a42855799d736cc97825"
-                    }
-                
             }
-                
-         
-        }
+           
+           
+              stage('mvn SonarQube') {
+    steps {
+        script {
+            withCredentials([string(credentialsId: 'sonar_token', variable: 'sonar_token')]) {
 
-  stage("docker image"){
+           
+                sh "mvn sonar:sonar -Dsonar.projectKey=sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=${sonar_token}"
+                        }
+                    }
+                }
+            }
+           
+
+           
+   
+           
+           
+        stage("docker image"){
             steps {
                 script{
                     sh 'docker build -t devops-integration .'
@@ -74,27 +80,29 @@ pipeline {
         stage("push image to dockerhub"){
             steps{
                 script{
-                    
+                    withCredentials([string(credentialsId: 'dockerhub', variable: 'dockerpassword')]) {
                         sh 'docker login -u ayman24051999 -p ${dockerpassword}'
+                       
+                        }
                         sh'docker push ayman24051999/devops-integration'
                        
                     }
             }
         }
-     
-    stage("angular "){
+
+            stage("angular "){
               steps {
                 echo 'pulling..';
                 git branch: 'main',
-                    url: 'https://github.com/fouratMejri/devopsprojectfouratmejri.git',
-                    
+                    url: 'hhttps://github.com/fouratMejri/devopsprojectfouratmejri.git',
+                   
                    
 
             }
            
         }
-
-    stage('Nexus') {
+       
+        stage('Nexus') {
             steps {
               sh 'mvn deploy'
              
@@ -102,6 +110,6 @@ pipeline {
             }
                
             }
-  
-    }
+       
+}
 }

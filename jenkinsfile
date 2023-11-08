@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo 'pulling..';
                 git branch: 'master',
-                    url: 'https://github.com/fouratMejri/gogodevops.git'
+                    url: 'https://github.com/fouratMejri/devopsprojectfouratmejri.git'
                     
             }
         
@@ -86,7 +86,7 @@ pipeline {
               steps {
                 echo 'pulling..';
                 git branch: 'main',
-                    url: 'https://github.com/fouratMejri/gogodevops.git',
+                    url: 'https://github.com/fouratMejri/devopsprojectfouratmejri.git',
                     
                    
 

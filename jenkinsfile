@@ -1,0 +1,107 @@
+pipeline {
+    agent any
+   
+    stages {
+        stage('Checkout') {
+            steps {
+                echo 'pulling..';
+                git branch: 'master',
+                    url: 'https://github.com/fouratMejri/gogodevops.git'
+                    
+            }
+        
+        }
+        stage('Clean Project') {
+            steps {
+                // Perform build steps here, like compiling the code
+                sh 'mvn clean'
+            }
+        }
+        stage('Build') {
+            steps {
+               
+                sh 'mvn install'
+            }
+        }
+        stage('package') {
+            steps {
+                sh 'mvn package'
+            }
+        }
+        stage('Run Unit Tests') {
+            steps {
+              sh 'mvn test'
+             
+               
+            }
+               
+        }
+        stage('mvn SonarQube') {
+    		steps {
+        		script {
+        
+                sh "mvn sonar:sonar -Dsonar.projectKey=sonar -Dsonar.host.url=http://192.168.33.10:9000 -Dsonar.login=squ_1c2c087a67e78c118675a42855799d736cc97825"
+                    }
+                
+            }
+                
+         
+        }
+
+  stage("docker image"){
+            steps {
+                script{
+                    sh 'docker build -t devops-integration .'
+                   
+                   
+                    sh'docker tag devops-integration ayman24051999/devops-integration'
+
+                }
+               
+            }
+           
+        }
+       
+        stage("docker compose"){
+            steps{
+                script{
+                   
+                    sh'docker-compose build'
+                    sh'docker-compose up -d'
+                }
+            }
+        }
+        stage("push image to dockerhub"){
+            steps{
+                script{
+                    
+                        sh 'docker login -u ayman24051999 -p ${dockerpassword}'
+                        sh'docker push ayman24051999/devops-integration'
+                       
+                    }
+            }
+        }
+     
+    stage("angular "){
+              steps {
+                echo 'pulling..';
+                git branch: 'main',
+                    url: 'https://github.com/fouratMejri/gogodevops.git',
+                    
+                   
+
+            }
+           
+        }
+
+    stage('Nexus') {
+            steps {
+              sh 'mvn deploy'
+             
+               
+            }
+               
+            }
+  
+    }
+}

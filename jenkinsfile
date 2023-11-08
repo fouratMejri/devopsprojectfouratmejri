@@ -96,7 +96,7 @@ pipeline {
               steps {
                 echo 'pulling..';
                 git branch: 'main',
-                    url: 'hhttps://github.com/fouratMejri/devopsprojectfouratmejri.git',
+                    url: 'hhttps://github.com/fouratMejri/devopsprojectfouratmejri.git'
                    
                    
 

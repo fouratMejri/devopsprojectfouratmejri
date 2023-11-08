@@ -3,7 +3,7 @@ services:
   mysqldb:
     image: mysql:8
     environment:
-      - MYSQL_DATABASE=MehdiMaarefDB
+      - MYSQL_DATABASE=devops
       - MYSQL_ALLOW_EMPTY_PASSWORD=yes
 
   devopsproject:
